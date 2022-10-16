@@ -5,39 +5,31 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-     <form action="signup-check.php" method="post">
+     <form action="" method="POST">
      	<h2>SIGN UP</h2>
-     	<?php if (isset($_GET['error'])) { ?>
-     		<p class="error"><?php echo $_GET['error']; ?></p>
-     	<?php } ?>
+  
 
-          <?php if (isset($_GET['success'])) { ?>
-               <p class="success"><?php echo $_GET['success']; ?></p>
-          <?php } ?>
+         
 
           <label>Name</label>
-          <?php if (isset($_GET['name'])) { ?>
+         
                <input type="text" 
                       name="name" 
                       placeholder="Name"
-                      value="<?php echo $_GET['name']; ?>"><br>
-          <?php }else{ ?>
-               <input type="text" 
-                      name="name" 
-                      placeholder="Name"><br>
-          <?php }?>
+                     ><br>
+          
+             
+         
 
           <label>User Name</label>
-          <?php if (isset($_GET['uname'])) { ?>
+         
                <input type="text" 
                       name="uname" 
                       placeholder="User Name"
-                      value="<?php echo $_GET['uname']; ?>"><br>
-          <?php }else{ ?>
-               <input type="text" 
-                      name="uname" 
-                      placeholder="User Name"><br>
-          <?php }?>
+                  ><br>
+          
+              
+          
 
 
      	<label>Password</label>
@@ -50,8 +42,30 @@
                  name="re_password" 
                  placeholder="Re_Password"><br>
 
-     	<button type="submit">Sign Up</button>
+     	<button type="submit" name="signup">Sign Up</button>
           <a href="login.php" class="ca">Already have an account?</a>
      </form>
 </body>
 </html>
+
+
+<?php 
+include 'db_conn.php';
+
+if (isset($_POST['signup'])) {
+  $name=$_POST['name'];
+  $uname=$_POST['uname'];
+  $code=$_POST['password'];
+  $re_code=$_POST['re_password'];
+  if ($re_code!==$code) {
+    echo "<script> alert('The password are not matching,Try again')</script>";
+  }
+  else{
+  $ans=mysqli_query($conn,"INSERT INTO users VALUES(NULL,'$uname','$code','$name')");
+  if ($ans==true) {
+    echo "<script> alert('Account has been Created successfully')</script>";
+  }
+  }
+}
+
+ ?>
